@@ -32,9 +32,9 @@ app.get("/", (req, res) => {
 });
 
 //PORT
-const PORT = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 
 //run listen
 app.listen(PORT, () => {
-  console.log(`Server Running on port ${PORT}`);
+  console.log(`Server Running on port ${port}`);
 });
