@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { Select } from "antd";
 import { useNavigate } from "react-router-dom";
+import { getAllCatRoute, createProductRoute } from "./../../APIroutes";
 const { Option } = Select;
 
 const CreateProduct = () => {
@@ -21,7 +22,7 @@ const CreateProduct = () => {
   //get all category
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get(`${getAllCatRoute}`);
       if (data?.success) {
         setCategories(data?.category);
       }
@@ -46,15 +47,12 @@ const CreateProduct = () => {
       productData.append("quantity", quantity);
       productData.append("photo", photo);
       productData.append("category", category);
-      const { data } = axios.post(
-        "/api/v1/product/create-product",
-        productData
-      );
+      const { data } = axios.post(`${createProductRoute}`, productData);
       if (data?.success) {
         toast.error(data?.message);
       } else {
         toast.success("Product Created Successfully");
-        navigate("/dashboard/admin/products");
+        navigate("/eazy-but/dashboard/admin/products");
       }
     } catch (error) {
       console.log(error);

@@ -4,13 +4,14 @@ import Layout from "./../../components/Layout/Layout";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { getAllProductsRoute, getProductPhotoRoute } from "./../../APIroutes";
 const Products = () => {
   const [products, setProducts] = useState([]);
 
   //getall products
   const getAllProducts = async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/get-product");
+      const { data } = await axios.get(`${getAllProductsRoute}`);
       setProducts(data.products);
     } catch (error) {
       console.log(error);
@@ -34,12 +35,12 @@ const Products = () => {
             {products?.map((p) => (
               <Link
                 key={p._id}
-                to={`/dashboard/admin/product/${p.slug}`}
+                to={`/eazy-buy/dashboard/admin/product/${p.slug}`}
                 className="product-link"
               >
                 <div className="card m-2" style={{ width: "18rem" }}>
                   <img
-                    src={`/api/v1/product/product-photo/${p._id}`}
+                    src={`${getProductPhotoRoute}${p._id}`}
                     className="card-img-top"
                     alt={p.name}
                   />

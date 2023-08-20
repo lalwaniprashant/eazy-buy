@@ -1,7 +1,6 @@
 {
   "homepage": "https://lalwaniprashant.github.io/eazy-buy/",
   "name": "client",
-  "proxy": "https://eazy-buy.onrender.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

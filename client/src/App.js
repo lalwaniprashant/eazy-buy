@@ -29,18 +29,20 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/product/:slug" element={<ProductDetails />} />
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/category/:slug" element={<CategoryProduct />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/dashboard" element={<PrivateRoute />}>
+        <Route path="/eazy-buy/" element={<HomePage />} />
+        <Route path="/eazy-buy/product/:slug" element={<ProductDetails />} />
+        <Route path="/eazy-buy/categories" element={<Categories />} />
+        <Route path="/eazy-buy/cart" element={<CartPage />} />
+        <Route path="/eazy-buy/category/:slug" element={<CategoryProduct />} />
+        <Route path="/eazy-buy/search" element={<Search />} />
+        <Route path="/eazy-buy/dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<Dashboard />} />
           <Route path="user/orders" element={<Orders />} />
           <Route path="user/profile" element={<Profile />} />
+          /eazy-buy
         </Route>
-        <Route path="/dashboard" element={<AdminRoute />}>
+        <Route path="/eazy-buy/dashboard" element={<AdminRoute />}>
+          /eazy-buy
           <Route path="admin" element={<AdminDashboard />} />
           <Route path="admin/create-category" element={<CreateCategory />} />
           <Route path="admin/create-product" element={<CreateProduct />} />
@@ -49,12 +51,12 @@ function App() {
           <Route path="admin/users" element={<Users />} />
           <Route path="admin/orders" element={<AdminOrders />} />
         </Route>
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPasssword />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/policy" element={<Policy />} />
+        <Route path="/eazy-buy/register" element={<Register />} />
+        <Route path="/eazy-buy/forgot-password" element={<ForgotPasssword />} />
+        <Route path="/eazy-buy/login" element={<Login />} />
+        <Route path="/eazy-buy/about" element={<About />} />
+        <Route path="/eazy-buy/contact" element={<Contact />} />
+        <Route path="/eazy-buy/policy" element={<Policy />} />
         <Route path="*" element={<Pagenotfound />} />
       </Routes>
     </>

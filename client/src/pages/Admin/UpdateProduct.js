@@ -5,6 +5,13 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  getSingleProductRoute,
+  getAllCatRoute,
+  updateProductRoute,
+  deleteProductRoute,
+  getProductPhotoRoute,
+} from "./../../APIroutes";
 const { Option } = Select;
 
 const UpdateProduct = () => {
@@ -24,7 +31,7 @@ const UpdateProduct = () => {
   const getSingleProduct = async () => {
     try {
       const { data } = await axios.get(
-        `/api/v1/product/get-product/${params.slug}`
+        `${getSingleProductRoute}${params.slug}`
       );
       setName(data.product.name);
       setId(data.product._id);
@@ -45,7 +52,7 @@ const UpdateProduct = () => {
   //get all category
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get(`${getAllCatRoute}`);
       if (data?.success) {
         setCategories(data?.category);
       }
@@ -70,15 +77,12 @@ const UpdateProduct = () => {
       productData.append("quantity", quantity);
       photo && productData.append("photo", photo);
       productData.append("category", category);
-      const { data } = axios.put(
-        `/api/v1/product/update-product/${id}`,
-        productData
-      );
+      const { data } = axios.put(`${updateProductRoute}${id}`, productData);
       if (data?.success) {
         toast.error(data?.message);
       } else {
         toast.success("Product Updated Successfully");
-        navigate("/dashboard/admin/products");
+        navigate("/eazy-buy/dashboard/admin/products");
       }
     } catch (error) {
       console.log(error);
@@ -91,11 +95,9 @@ const UpdateProduct = () => {
     try {
       let answer = window.prompt("Are You Sure want to delete this product ? ");
       if (!answer) return;
-      const { data } = await axios.delete(
-        `/api/v1/product/delete-product/${id}`
-      );
+      const { data } = await axios.delete(`${deleteProductRoute}${id}`);
       toast.success("Product DEleted Succfully");
-      navigate("/dashboard/admin/products");
+      navigate("/eazy-buy/dashboard/admin/products");
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
@@ -153,7 +155,7 @@ const UpdateProduct = () => {
                 ) : (
                   <div className="text-center">
                     <img
-                      src={`/api/v1/product/product-photo/${id}`}
+                      src={`${getProductPhotoRoute}${id}`}
                       alt="product_photo"
                       height={"200px"}
                       className="img img-responsive"

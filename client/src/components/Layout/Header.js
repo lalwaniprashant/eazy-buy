@@ -36,35 +36,35 @@ const Header = () => {
             <span className="navbar-toggler-icon" />
           </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <Link to="/" className="navbar-brand">
+            <Link to="/eazy-buy/" className="navbar-brand">
               🛒 EazyBuy
             </Link>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <SearchInput />
               <li className="nav-item">
-                <NavLink to="/" className="nav-link ">
+                <NavLink to="/eazy-buy/" className="nav-link ">
                   Home
                 </NavLink>
               </li>
               <li className="nav-item dropdown">
                 <Link
                   className="nav-link dropdown-toggle"
-                  to={"/categories"}
+                  to={"/eazy-buy/categories"}
                   data-bs-toggle="dropdown"
                 >
                   Categories
                 </Link>
                 <ul className="dropdown-menu">
                   <li>
-                    <Link className="dropdown-item" to={"/categories"}>
+                    <Link className="dropdown-item" to={"/eazy-buy/categories"}>
                       All Categories
                     </Link>
                   </li>
-                  {categories?.map((c) => (
-                    <li>
+                  {categories?.map((c, index) => (
+                    <li key={index}>
                       <Link
                         className="dropdown-item"
-                        to={`/category/${c.slug}`}
+                        to={`/eazy-buy/category/${c.slug}`}
                       >
                         {c.name}
                       </Link>
@@ -76,12 +76,12 @@ const Header = () => {
               {!auth?.user ? (
                 <>
                   <li className="nav-item">
-                    <NavLink to="/register" className="nav-link">
+                    <NavLink to="/eazy-buy/register" className="nav-link">
                       Register
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink to="/login" className="nav-link">
+                    <NavLink to="/eazy-buy/login" className="nav-link">
                       Login
                     </NavLink>
                   </li>
@@ -101,7 +101,7 @@ const Header = () => {
                     <ul className="dropdown-menu">
                       <li>
                         <NavLink
-                          to={`/dashboard/${
+                          to={`/eazy-buy/dashboard/${
                             auth?.user?.role === 1 ? "admin" : "user"
                           }`}
                           className="dropdown-item"
@@ -112,7 +112,7 @@ const Header = () => {
                       <li>
                         <NavLink
                           onClick={handleLogout}
-                          to="/login"
+                          to="/eazy-buy/login"
                           className="dropdown-item"
                         >
                           Logout
@@ -123,7 +123,7 @@ const Header = () => {
                 </>
               )}
               <li className="nav-item">
-                <NavLink to="/cart" className="nav-link">
+                <NavLink to="/eazy-buy/cart" className="nav-link">
                   <Badge count={cart?.length} showZero offset={[10, -5]}>
                     Cart
                   </Badge>

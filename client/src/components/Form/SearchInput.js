@@ -2,6 +2,8 @@ import React from "react";
 import { useSearch } from "../../context/search";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { searchProductRoute } from "./../../APIroutes";
+
 const SearchInput = () => {
   const [values, setValues] = useSearch();
   const navigate = useNavigate();
@@ -10,10 +12,10 @@ const SearchInput = () => {
     e.preventDefault();
     try {
       const { data } = await axios.get(
-        `/api/v1/product/search/${values.keyword}`
+        `${searchProductRoute}${values.keyword}`
       );
       setValues({ ...values, results: data });
-      navigate("/search");
+      navigate("/eazy-buy/search");
     } catch (error) {
       console.log(error);
     }

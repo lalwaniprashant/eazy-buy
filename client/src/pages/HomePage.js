@@ -8,6 +8,13 @@ import toast from "react-hot-toast";
 import Layout from "./../components/Layout/Layout";
 import { AiOutlineReload } from "react-icons/ai";
 import "../styles/Homepage.css";
+import {
+  getAllCatRoute,
+  productPerPageRoute,
+  productCountRoute,
+  filterProductRoute,
+  getProductPhotoRoute,
+} from "./../APIroutes";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -20,10 +27,11 @@ const HomePage = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
+  console.log("Welcome to EazyBuy");
   //get all cat
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get(`${getAllCatRoute}`);
       if (data?.success) {
         setCategories(data?.category);
       }
@@ -40,7 +48,7 @@ const HomePage = () => {
   const getAllProducts = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
+      const { data } = await axios.get(`${productPerPageRoute}${page}`);
       setLoading(false);
       setProducts(data.products);
     } catch (error) {
@@ -52,7 +60,7 @@ const HomePage = () => {
   //getTOtal COunt
   const getTotal = async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/product-count");
+      const { data } = await axios.get(`${productCountRoute}`);
       setTotal(data?.total);
     } catch (error) {
       console.log(error);
@@ -62,12 +70,13 @@ const HomePage = () => {
   useEffect(() => {
     if (page === 1) return;
     loadMore();
+    // eslint-disable-next-line
   }, [page]);
   //load more
   const loadMore = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
+      const { data } = await axios.get(`${productPerPageRoute}${page}`);
       setLoading(false);
       setProducts([...products, ...data?.products]);
     } catch (error) {
@@ -88,16 +97,18 @@ const HomePage = () => {
   };
   useEffect(() => {
     if (!checked.length || !radio.length) getAllProducts();
+    // eslint-disable-next-line
   }, [checked.length, radio.length]);
 
   useEffect(() => {
     if (checked.length || radio.length) filterProduct();
+    // eslint-disable-next-line
   }, [checked, radio]);
 
   //get filterd product
   const filterProduct = async () => {
     try {
-      const { data } = await axios.post("/api/v1/product/product-filters", {
+      const { data } = await axios.post(`${filterProductRoute}`, {
         checked,
         radio,
       });
@@ -155,7 +166,7 @@ const HomePage = () => {
             {products?.map((p) => (
               <div className="card m-2" key={p._id}>
                 <img
-                  src={`/api/v1/product/product-photo/${p._id}`}
+                  src={`${getProductPhotoRoute}${p._id}`}
                   className="card-img-top"
                   alt={p.name}
                 />
@@ -175,7 +186,7 @@ const HomePage = () => {
                   <div className="card-name-price">
                     <button
                       className="btn btn-info ms-1"
-                      onClick={() => navigate(`/product/${p.slug}`)}
+                      onClick={() => navigate(`/eazy-buy/product/${p.slug}`)}
                     >
                       More Details
                     </button>

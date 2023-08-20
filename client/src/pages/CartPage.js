@@ -4,10 +4,14 @@ import { useCart } from "../context/cart";
 import { useAuth } from "../context/auth";
 import { useNavigate } from "react-router-dom";
 import DropIn from "braintree-web-drop-in-react";
-import { AiFillWarning } from "react-icons/ai";
 import axios from "axios";
 import toast from "react-hot-toast";
 import "../styles/CartStyles.css";
+import {
+  paymentTokenRoute,
+  paymentRoute,
+  getProductPhotoRoute,
+} from "./../APIroutes";
 
 const CartPage = () => {
   const [auth, setAuth] = useAuth();
@@ -48,7 +52,7 @@ const CartPage = () => {
   //get payment gateway token
   const getToken = async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/braintree/token");
+      const { data } = await axios.get(`${paymentTokenRoute}`);
       setClientToken(data?.clientToken);
     } catch (error) {
       console.log(error);
@@ -63,14 +67,14 @@ const CartPage = () => {
     try {
       setLoading(true);
       const { nonce } = await instance.requestPaymentMethod();
-      const { data } = await axios.post("/api/v1/product/braintree/payment", {
+      const { data } = await axios.post(`${paymentRoute}`, {
         nonce,
         cart,
       });
       setLoading(false);
       localStorage.removeItem("cart");
       setCart([]);
-      navigate("/dashboard/user/orders");
+      navigate("/eazy-buy/dashboard/user/orders");
       toast.success("Payment Completed Successfully ");
     } catch (error) {
       console.log(error);
@@ -103,7 +107,7 @@ const CartPage = () => {
                 <div className="row card flex-row" key={p._id}>
                   <div className="col-md-4">
                     <img
-                      src={`/api/v1/product/product-photo/${p._id}`}
+                      src={`${getProductPhotoRoute}${p._id}`}
                       className="card-img-top"
                       alt={p.name}
                       width="100%"
@@ -138,7 +142,9 @@ const CartPage = () => {
                     <h5>{auth?.user?.address}</h5>
                     <button
                       className="btn btn-outline-warning"
-                      onClick={() => navigate("/dashboard/user/profile")}
+                      onClick={() =>
+                        navigate("/eazy-buy/dashboard/user/profile")
+                      }
                     >
                       Update Address
                     </button>
@@ -149,7 +155,9 @@ const CartPage = () => {
                   {auth?.token ? (
                     <button
                       className="btn btn-outline-warning"
-                      onClick={() => navigate("/dashboard/user/profile")}
+                      onClick={() =>
+                        navigate("/eazy-buy/dashboard/user/profile")
+                      }
                     >
                       Update Address
                     </button>
@@ -157,8 +165,8 @@ const CartPage = () => {
                     <button
                       className="btn btn-outline-warning"
                       onClick={() =>
-                        navigate("/login", {
-                          state: "/cart",
+                        navigate("/eazy-buy/login", {
+                          state: "/eazy-buy/cart",
                         })
                       }
                     >
